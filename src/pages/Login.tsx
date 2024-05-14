@@ -23,7 +23,7 @@ export function Login() {
         criteriaMode: 'all',
     })
 
-    const { mutateAsync: LoginFn } = useMutation({
+    const { mutateAsync: LoginFn, isPending } = useMutation({
         mutationFn: LoginUser,
         onSuccess: (response) => {
             toast.success("Sucesso");
@@ -58,7 +58,7 @@ export function Login() {
                         <Switch id="airplane-mode" />
                         <p className='font-medium'>Manter login</p>
                     </div>
-                    <Button className='w-full flex items-center gap-2'>
+                    <Button className='w-full flex items-center gap-2' disabled={isPending}>
                         Entrar <IoArrowForwardOutline />
                     </Button>
                 </form>

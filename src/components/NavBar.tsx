@@ -8,7 +8,7 @@ export function NavBar() {
 
         <div className="text-3xl flex items-center justify-around p-3 rounded-t-xl fixed w-full bottom-0 border-t text-slate-800">
             <NavLink to='/home'><GoHome /></NavLink>
-            <NavLink to='/schedules'><RiCalendarScheduleLine /></NavLink>
+            <NavLink to='/reservas'><RiCalendarScheduleLine /></NavLink>
             <NavLink to='/'><FiUser /></NavLink>
             <NavLink to='/'><IoRocketOutline /></NavLink>
         </div>
