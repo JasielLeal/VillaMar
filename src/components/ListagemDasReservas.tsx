@@ -1,61 +1,78 @@
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { FindByDay, FindByDayRequest } from "@/api/FindByDay/FindByDay";
+import { useParams } from "react-router-dom";
+import { DetalhesDaReserva, Reserva } from "./DetalhesDaReserve";
+import { Accordion } from "./ui/accordion";
+import { IoRocket } from "react-icons/io5";
 import { Button } from "./ui/button";
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+import { useEffect, useState } from "react";
+import { CriarReserva } from "./CriarReserva";
+import {
+    Dialog,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 
 export function ListagemDasReservas() {
+
+    const { day } = useParams()
+
+    const { data } = useQuery({
+        queryKey: ['FindByDay', day],
+        queryFn: () => FindByDay({ day } as FindByDayRequest),
+    });
+
+    const [reservasCount, setReservasCount] = useState(0);
+
+    useEffect(() => {
+        if (data) {
+            setReservasCount(data.length);
+        }
+    }, [data]);
+
     return (
         <>
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>
-                        <div className="flex flex-col text-left ">
-                            <p>Jasiel Viana Leal</p>
-                            <p className="text-xs">120.695.144-39</p>
-                        </div>
+            {data?.length === 0 ? (
+                <div>
+                    <div className="flex justify-end w-full">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button className="mt-5 mb-5 flex " disabled={reservasCount >= 10}>Adicionar</Button>
+                            </DialogTrigger>
+                            <CriarReserva />
+                        </Dialog>
 
-                    </AccordionTrigger>
-                    <AccordionContent className="flex flex-col gap-10">
-                        <div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">CheckIn:</p>
-                                <p>15/05/2024</p>
-                            </div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">CheckOut:</p>
-                                <p>16/05/2024</p>
-                            </div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">Quarto:</p>
-                                <p>1</p>
-                            </div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">Origem:</p>
-                                <p>WhatsApp</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">Pagamento:</p>
-                                <p>
-                                    <Badge variant="default" className="bg-red-500">Pendente</Badge>
-                                </p>
-                            </div>
-                            <div className="flex items-center justify-between mb-2">
-                                <p className="font-semibold">Criado por:</p>
-                                <p>
-                                    Adjair Viana
-                                </p>
-                            </div>
-                            <Button className="w-full mt-5">Finalizar</Button>
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
+                    </div>
+                    <Alert>
+                        <IoRocket className="h-4 w-4" />
+                        <AlertTitle>Opss!</AlertTitle>
+                        <AlertDescription>
+                            Nenhuma reserva cadastrada ainda para este dia.
+                        </AlertDescription>
+                    </Alert>
+                </div>
+            ) : (
+                <>
+                    <div className="flex justify-end w-full">
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button className="mt-5 mb-5 flex " disabled={reservasCount >= 10}>Adicionar</Button>
+                            </DialogTrigger>
+                            <CriarReserva />
+                        </Dialog>
+                    </div>
+                    {data?.map((reserva: Reserva) => (
+                        <Accordion type="single" collapsible={true} className="w-full" key={reserva.id}>
+                            <DetalhesDaReserva reserva={reserva} />
+                        </Accordion>
+                    ))}
+                </>
+            )}
         </>
-    )
+    );
 }

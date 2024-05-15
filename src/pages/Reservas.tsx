@@ -10,8 +10,6 @@ export function Reservas() {
         if (selectedDate) {
 
             const dateFormat = selectedDate.toISOString()
-            console.log(dateFormat)
-
             navigate(`/reservas/${dateFormat}`)
         }
     }

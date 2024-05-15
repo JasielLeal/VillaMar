@@ -6,7 +6,7 @@ import { NavLink } from "./NavLink";
 export function NavBar() {
     return (
 
-        <div className="text-3xl flex items-center justify-around p-3 rounded-t-xl fixed w-full bottom-0 border-t text-slate-800">
+        <div className="text-3xl flex items-center justify-around p-3 rounded-t-xl fixed w-full bottom-0 border-t text-slate-800 bg-white">
             <NavLink to='/home'><GoHome /></NavLink>
             <NavLink to='/reservas'><RiCalendarScheduleLine /></NavLink>
             <NavLink to='/'><FiUser /></NavLink>
