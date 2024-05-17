@@ -39,7 +39,7 @@ export function ListagemDeUsuarios({ user }: Users) {
 
     return (
         <>
-
+    
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <p className="text-slate-800 font-semibold flex gap-2">{user.name} {user.secondName}<Badge>{user.isOwner}</Badge></p>
