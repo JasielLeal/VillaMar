@@ -4,6 +4,7 @@ import { AppLayout } from "./layouts/App";
 import { Home } from "./pages/Home";
 import { Reservas } from "./pages/Reservas";
 import { ReservasDia } from "./pages/ReservasDia";
+import { Users } from "./pages/Users";
 
 export const router = createBrowserRouter([
     {
@@ -16,7 +17,8 @@ export const router = createBrowserRouter([
         children: [
             { path: '/home', element: <Home /> },
             { path: '/reservas', element: <Reservas /> },
-            { path: '/reservas/:day', element: <ReservasDia/>}
+            { path: '/reservas/:day', element: <ReservasDia/>},
+            { path: '/users', element: <Users/>},
         ]
     }
 ])
