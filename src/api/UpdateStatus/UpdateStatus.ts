@@ -5,5 +5,5 @@ export async function UpdateStatus(id: string) {
     id,
   });
 
-  return response.data;
+  return response;
 }
