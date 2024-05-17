@@ -10,6 +10,8 @@ import { formatCPF } from "@/utils/FormatCPF";
 import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UpdateStatus } from "@/api/UpdateStatus/UpdateStatus";
 import toast from "react-hot-toast";
+import { FaRegTrashCan } from "react-icons/fa6";
+import { DeleteReserve } from "@/api/DeleteReserve/DeleteReserve";
 
 interface DetalhesDaReservaDTO {
     reserva: {
@@ -49,7 +51,7 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
 
     const queryClient = useQueryClient()
 
-    const { mutateAsync: UpdateStatusFn} = useMutation({
+    const { mutateAsync: UpdateStatusFn } = useMutation({
         mutationFn: UpdateStatus,
         onSuccess: () => {
             toast.success("Sucesso");
@@ -58,12 +60,23 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
         onError: () => {
             toast.error("Erro durante a autenticação");
         },
-
     })
 
+    const { mutateAsync: DeleteReserveFn } = useMutation({
+        mutationFn: DeleteReserve,
+        onSuccess: () => {
+            toast.success("Sucesso");
+            queryClient.invalidateQueries(['FindByDay'] as InvalidateQueryFilters)
+        },
+        onError: () => {
+            toast.error("Erro ao deletar reserva");
+        },
+    })
+
+
     return (
-        <>
-            <AccordionItem value={reserva.id}>
+        <div className="grid grid-cols-9 w-full gap-6 items-start">
+            <AccordionItem value={reserva.id} className="col-span-8">
                 <AccordionTrigger>
                     <div className="flex flex-col text-left ">
                         <p>{reserva.name}</p>
@@ -113,18 +126,22 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
                                 {reserva.userName}
                             </p>
                         </div>
-                        {reserva.statusReseva == 'Finalizado' ?  
-                        <Button disabled={true} className="w-full mt-5" onClick={async () => {
-                            await UpdateStatusFn(reserva.id)
-                        }}>Finalizado
-                        </Button> 
-                        : 
-                        <Button disabled={false} className="w-full mt-5" onClick={async () => {
-                            await UpdateStatusFn(reserva.id)
-                        }}>Finalizar</Button>}
+                        {reserva.statusReseva == 'Finalizado' ?
+                            <Button disabled={true} className="w-full mt-5" onClick={async () => {
+                                await UpdateStatusFn(reserva.id)
+                            }}>Finalizado
+                            </Button>
+                            :
+                            <Button disabled={false} className="w-full mt-5" onClick={async () => {
+                                await UpdateStatusFn(reserva.id)
+                            }}>Finalizar</Button>}
                     </div>
                 </AccordionContent>
             </AccordionItem>
-        </>
+            <button className="text-red-500 cols-span-1 absolute right-5 mt-7" onClick={async () => {
+                await DeleteReserveFn(reserva?.id)
+            }
+            }><FaRegTrashCan /></button>
+        </div>
     )
 }
