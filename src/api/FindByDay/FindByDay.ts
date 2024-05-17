@@ -8,8 +8,6 @@ export interface FindByDayRequest {
 export async function FindByDay({ day }: FindByDayRequest) {
   const cookie = new Cookies();
 
-  console.log(backend, day)
-
   const response = await backend.get(`/reserve/${day}`, {
     headers: {
       Authorization: `Bearer ${cookie.get("token")}`,

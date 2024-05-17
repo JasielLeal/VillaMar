@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
 import { format } from "date-fns";
 import { formatCPF } from "@/utils/FormatCPF";
+import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
+import { UpdateStatus } from "@/api/UpdateStatus/UpdateStatus";
+import toast from "react-hot-toast";
 
 interface DetalhesDaReservaDTO {
     reserva: {
@@ -22,7 +25,7 @@ interface DetalhesDaReservaDTO {
         createdAt: Date
         userId: string
         userName: string
-
+        statusReseva: string
     }
 }
 
@@ -39,9 +42,24 @@ export interface Reserva {
     createdAt: Date
     userId: string
     userName: string
+    statusReseva: string
 }
 
 export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
+
+    const queryClient = useQueryClient()
+
+    const { mutateAsync: UpdateStatusFn} = useMutation({
+        mutationFn: UpdateStatus,
+        onSuccess: () => {
+            toast.success("Sucesso");
+            queryClient.invalidateQueries(['FindByDay'] as InvalidateQueryFilters)
+        },
+        onError: () => {
+            toast.error("Erro durante a autenticação");
+        },
+
+    })
 
     return (
         <>
@@ -84,12 +102,26 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
                             </p>
                         </div>
                         <div className="flex items-center justify-between mb-2">
+                            <p className="font-semibold">Status da Reserva:</p>
+                            <p>
+                                {reserva.statusReseva == 'Finalizado' ? <Badge className="bg-green-500">Finalizado</Badge> : <Badge>Reservado</Badge>}
+                            </p>
+                        </div>
+                        <div className="flex items-center justify-between mb-2">
                             <p className="font-semibold">Criado por:</p>
                             <p>
                                 {reserva.userName}
                             </p>
                         </div>
-                        <Button className="w-full mt-5">Finalizar</Button>
+                        {reserva.statusReseva == 'Finalizado' ?  
+                        <Button disabled={true} className="w-full mt-5" onClick={async () => {
+                            await UpdateStatusFn(reserva.id)
+                        }}>Finalizado
+                        </Button> 
+                        : 
+                        <Button disabled={false} className="w-full mt-5" onClick={async () => {
+                            await UpdateStatusFn(reserva.id)
+                        }}>Finalizar</Button>}
                     </div>
                 </AccordionContent>
             </AccordionItem>

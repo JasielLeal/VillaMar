@@ -8,7 +8,6 @@ export function Reservas() {
 
     async function teste(selectedDate: Date | undefined) {
         if (selectedDate) {
-
             const dateFormat = selectedDate.toISOString()
             navigate(`/reservas/${dateFormat}`)
         }
@@ -19,7 +18,7 @@ export function Reservas() {
             <p className="text-slate-800 font-semibold pt-10 text-xl">Calendario</p>
             <p className="mb-8 text-sm">Selecione um dia para ver as reservas</p>
             <Calendar
-                
+
                 selected={date}
                 onSelect={setDate}
                 onDayClick={teste}

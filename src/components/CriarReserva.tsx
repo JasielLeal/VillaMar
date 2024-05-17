@@ -21,7 +21,7 @@ export function CriarReserva() {
     const { day } = useParams();
     const [cpf, setCpf] = useState("");
     const queryClient = useQueryClient()
-    
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(CriarReservaSchema),
         mode: 'all',
@@ -49,7 +49,7 @@ export function CriarReserva() {
         const checkInFormatted = format(new Date(day as string), "dd/MM/yyyy", { locale: ptBR });
         const checkOutFormatted = format(checkoutDate, "dd/MM/yyyy", { locale: ptBR });
         let statusBoolean = false
-        if(data.status === "true"){
+        if (data.status === "true") {
             statusBoolean = true
         }
         // Adicionando as datas formatadas ao objeto de dados
@@ -70,12 +70,18 @@ export function CriarReserva() {
                 <DialogHeader>
                     <DialogTitle>Criar reserva</DialogTitle>
                     <form onSubmit={handleSubmit(onSub)}>
-                        <p className="text-left">Nome</p>
+                        <div className="flex items-center">
+                            <p className="text-left">Nome</p>
+                            {errors.name && <span className="text-red-500">{errors.name.message?.toString()}</span>}
+                        </div>
                         <Input placeholder="Nome do cliente" className="mb-2" {...register('name')} />
-                        {errors.name && <span className="text-red-500">{errors.name.message?.toString()}</span>}
-                        <p className="text-left">CPF</p>
+
+                        <div className="flex items-center">
+                            <p className="text-left">CPF</p>
+                            {errors.cpf && <span className="text-red-500">{errors.cpf.message?.toString()}</span>}
+                        </div>
                         <Input placeholder="CPF do cliente" className="mb-2" value={cpf} {...register('cpf')} onChange={HandleFormatCPF} />
-                        {errors.cpf && <span className="text-red-500">{errors.cpf.message?.toString()}</span>}
+
                         <p className="text-left">Quarto</p>
                         <div className="flex border p-2 rounded-sm mb-2">
                             <select className="text-left w-full" {...register('roomName')}>
@@ -94,18 +100,27 @@ export function CriarReserva() {
                         <p className="text-left">Check-Out</p>
                         <Input placeholder="Check-out" type="date" className="mb-2" {...register('checkOut')} />
                         {errors.checkOut && <span className="text-red-500">{errors.checkOut.message?.toString()}</span>}
-                        <p className="text-left">Origem</p>
+
+                        <div className="flex items-center">
+                            <p className="text-left">Origem</p>
+                            {errors.FromWhere && <span className="text-red-500">{errors.FromWhere.message?.toString()}</span>}
+                        </div>
                         <Input placeholder="WhatsApp, Booking, etc..." className="mb-2" {...register('FromWhere')} />
-                        {errors.FromWhere && <span className="text-red-500">{errors.FromWhere.message?.toString()}</span>}
-                        <p className="text-left">Valor</p>
+
+
+                        <div className="flex items-center">
+                            <p className="text-left">Valor</p>
+                            {errors.value && <span className="text-red-500">{errors.value.message?.toString()}</span>}
+                        </div>
                         <Input placeholder="Valor da reserva" className="mb-2" {...register('value')} />
-                        {errors.value && <span className="text-red-500">{errors.value.message?.toString()}</span>}
+
                         <p className="text-left">Status do pagamento</p>
                         <div className="flex border p-2 rounded-sm mb-2">
                             <select className="text-left w-full" {...register('status')}>
                                 <option value="false">Pendente</option>
                                 <option value="true">Pago</option>
                             </select>
+                            {errors.status && <span className="text-red-500">{errors.status.message?.toString()}</span>}
                         </div>
                         <Button className="w-full" disabled={isPending}>Criar reserva</Button>
                     </form>
