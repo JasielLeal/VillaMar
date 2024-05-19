@@ -10,7 +10,7 @@ export function NavBar() {
             <NavLink to='/home'><GoHome /></NavLink>
             <NavLink to='/reservas'><RiCalendarScheduleLine /></NavLink>
             <NavLink to='/users'><FiUser /></NavLink>
-            <NavLink to='/'><IoRocketOutline /></NavLink>
+            <NavLink to='/financas'><IoRocketOutline /></NavLink>
         </div>
 
     )

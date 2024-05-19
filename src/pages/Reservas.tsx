@@ -14,7 +14,7 @@ export function Reservas() {
     }
 
     return (
-        <div className="px-5">
+        <div className="px-5 ">
             <p className="text-slate-800 font-semibold pt-10 text-xl">Calendario</p>
             <p className="mb-8 text-sm">Selecione um dia para ver as reservas</p>
             <Calendar

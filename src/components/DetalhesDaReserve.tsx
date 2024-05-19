@@ -84,6 +84,7 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
                     </div>
 
                 </AccordionTrigger>
+
                 <AccordionContent className="flex flex-col gap-10">
                     <div>
                         <div className="flex items-center justify-between mb-2">
@@ -138,10 +139,13 @@ export function DetalhesDaReserva({ reserva }: DetalhesDaReservaDTO) {
                     </div>
                 </AccordionContent>
             </AccordionItem>
-            <button className="text-red-500 cols-span-1 absolute right-5 mt-7" onClick={async () => {
-                await DeleteReserveFn(reserva?.id)
-            }
-            }><FaRegTrashCan /></button>
+            <button className="text-red-500 cols-span-1 absolute right-5 mt-7"
+                onClick={async () => {
+                    await DeleteReserveFn(reserva?.id)
+                }
+                }>
+                <FaRegTrashCan />
+            </button>
         </div>
     )
 }

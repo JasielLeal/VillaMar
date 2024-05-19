@@ -12,7 +12,10 @@ import { FieldValues, useForm } from "react-hook-form";
 import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { CreateUser } from "@/api/CriarUsuario/CriarUsuario";
+import { useState } from "react";
 export function CriarUsuario() {
+
+    const [modal, setModal] = useState(false)
 
     const queryClient = useQueryClient()
 
@@ -27,6 +30,7 @@ export function CriarUsuario() {
         onSuccess: () => {
             toast.success("Sucesso");
             queryClient.invalidateQueries(['GetAllUsers'] as InvalidateQueryFilters)
+            setModal(false)
         },
         onError: () => {
             toast.error("E-mail já em uso");
@@ -38,11 +42,18 @@ export function CriarUsuario() {
         await criarUsuarioFn(data)
     }
 
+    function set() {
+        setModal(true)
+    }
+
+    function closeModal() {
+        setModal(false)
+    }
 
     return (
         <>
-            <Dialog>
-                <DialogTrigger>
+            <Dialog open={modal}>
+                <DialogTrigger onClick={set}>
                     <Button className="flex items-center gap-2 mt-5 mb-10">Adicionar Usuário <FaRegSquarePlus /></Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -69,7 +80,7 @@ export function CriarUsuario() {
                             <p className="text-left">Senha</p>
                             {errors.password && <span className="text-red-500">{errors.password.message?.toString()}</span>}
                         </div>
-                        <Input placeholder="Digite a senha" className="mb-2"{...register('password')} type="password"/>
+                        <Input placeholder="Digite a senha" className="mb-2"{...register('password')} type="password" />
 
                         <div className="flex items-center">
                             <p className="text-left">Cargo</p>
@@ -81,7 +92,10 @@ export function CriarUsuario() {
                                 <option value="Owner">Owner</option>
                             </select>
                         </div>
-                        <Button className="w-full">Criar reserva</Button>
+                        <div className="flex gap-2 mt-5">
+                            <Button className="w-full">Criar reserva</Button>
+                            <Button className="w-full" onClick={closeModal} variant={'outline'}>Fechar</Button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>

@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CriarReservaSchema } from "@/schemas/CriarReservaSchema";
-import { formatCPF } from "@/utils/FormatCPF";
+import { formatCPF, formatCurrencye } from "@/utils/FormatCPF";
 import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
 import { criarReserva } from "@/api/CriarReserva/CriarReserva";
 import toast from "react-hot-toast";
@@ -22,7 +22,7 @@ export function CriarReserva() {
     const [cpf, setCpf] = useState("");
     const queryClient = useQueryClient()
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         resolver: zodResolver(CriarReservaSchema),
         mode: 'all',
         criteriaMode: 'all',
@@ -63,6 +63,15 @@ export function CriarReserva() {
         const formattedCpf = formatCPF(event.target.value);
         setCpf(formattedCpf);
     }
+
+    const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        // Remove todos os caracteres que não são números
+        const onlyNumbers = value.replace(/[^\d]/g, '');
+        // Atualiza o valor formatado no campo de entrada
+        setValue('value', formatCurrencye(onlyNumbers));
+    };
+
 
     return (
         <>
@@ -112,7 +121,7 @@ export function CriarReserva() {
                             <p className="text-left">Valor</p>
                             {errors.value && <span className="text-red-500">{errors.value.message?.toString()}</span>}
                         </div>
-                        <Input placeholder="Valor da reserva" className="mb-2" {...register('value')} />
+                        <Input placeholder="Valor da reserva" className="mb-2" {...register('value')} onChange={handleValueChange} />
 
                         <p className="text-left">Status do pagamento</p>
                         <div className="flex border p-2 rounded-sm mb-2">

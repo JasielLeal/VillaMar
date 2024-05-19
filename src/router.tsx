@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { Reservas } from "./pages/Reservas";
 import { ReservasDia } from "./pages/ReservasDia";
 import { Users } from "./pages/Users";
+import { Financas } from "./pages/Financas";
 
 export const router = createBrowserRouter([
     {
@@ -17,8 +18,9 @@ export const router = createBrowserRouter([
         children: [
             { path: '/home', element: <Home /> },
             { path: '/reservas', element: <Reservas /> },
-            { path: '/reservas/:day', element: <ReservasDia/>},
-            { path: '/users', element: <Users/>},
+            { path: '/reservas/:day', element: <ReservasDia /> },
+            { path: '/users', element: <Users /> },
+            { path: '/financas', element: <Financas /> }
         ]
     }
 ])

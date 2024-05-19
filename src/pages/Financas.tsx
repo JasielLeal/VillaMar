@@ -1,16 +1,11 @@
-import {
-    Card,
-    CardDescription,
-    CardHeader,
-} from "@/components/ui/card"
-import { Separator } from "./ui/separator"
-import { IoIosCheckbox } from "react-icons/io";
+import { TotalMonthlyAmount } from "@/api/TotalMonthlyAmount/TotalMonthlyAmount";
+import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
-import { totalMonthlyBooking } from "@/api/totalMonthlyBooking/totalMonthlyBooking";
-import { IoMdEye } from "react-icons/io";
-import { IoMdEyeOff } from "react-icons/io";
 import { useState } from "react";
-export function ReservasTotal() {
+import { IoIosCheckbox, IoMdEye, IoMdEyeOff } from "react-icons/io";
+
+export function Financas() {
 
     const [visible, setVisible] = useState(false)
 
@@ -19,17 +14,16 @@ export function ReservasTotal() {
     }
 
     const { data } = useQuery({
-        queryKey: ['totalMonthlyBooking'],
-        queryFn: totalMonthlyBooking,
+        queryKey: ['TotalMonthlyAmount'],
+        queryFn: TotalMonthlyAmount,
     });
 
     return (
-        <div className="">
-
+        <div className="mt-10 px-5">
             <Card className=" shadow">
                 <CardHeader className="flex gap-2">
                     <CardDescription className="flex items-center justify-between">
-                        Reservas Finalizadas (Mês)
+                        Total arrecadado (Mês)
                         <div className="text-xl text-primary">
                             <IoIosCheckbox />
                         </div>
@@ -38,9 +32,9 @@ export function ReservasTotal() {
                     <div className="flex items-center justify-between">
                         {
                             visible ?
-                            <p className="text-xl">{data}</p>
-                            :
-                            <div className="bg-slate-100 w-56 h-7 rounded-md"></div>
+                                <p className="text-xl">{data}</p>
+                                :
+                                <div className="bg-slate-100 w-56 h-7 rounded-md"></div>
                         }
                         {visible ?
                             <button onClick={toggleVisible}>
@@ -58,6 +52,8 @@ export function ReservasTotal() {
                     </div>
                 </CardHeader>
             </Card>
+            
         </div>
     )
+
 }

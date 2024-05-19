@@ -6,11 +6,11 @@ import {
 import { Separator } from "./ui/separator"
 import { IoIosCheckbox } from "react-icons/io";
 import { useQuery } from "@tanstack/react-query";
-import { totalMonthlyBooking } from "@/api/totalMonthlyBooking/totalMonthlyBooking";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import { useState } from "react";
-export function ReservasTotal() {
+import { TotalConfirmedReservations } from "@/api/TotalConfirmedReservations/TotalConfirmedReservations";
+export function ReservasAndamento() {
 
     const [visible, setVisible] = useState(false)
 
@@ -19,8 +19,8 @@ export function ReservasTotal() {
     }
 
     const { data } = useQuery({
-        queryKey: ['totalMonthlyBooking'],
-        queryFn: totalMonthlyBooking,
+        queryKey: ['TotalConfirmedReservations'],
+        queryFn: TotalConfirmedReservations,
     });
 
     return (
@@ -29,7 +29,7 @@ export function ReservasTotal() {
             <Card className=" shadow">
                 <CardHeader className="flex gap-2">
                     <CardDescription className="flex items-center justify-between">
-                        Reservas Finalizadas (Mês)
+                        Reservas Realizadas (Mês)
                         <div className="text-xl text-primary">
                             <IoIosCheckbox />
                         </div>
