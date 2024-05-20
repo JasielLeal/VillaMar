@@ -10,7 +10,7 @@ export function ReservasDia() {
     const { day } = useParams();
 
     return (
-        <div className="px-5 pt-10 pb-10 h-screen">
+        <div className="px-5 pt-10 pb-20">
             <div className="flex items-center w-full justify-between">
                 <Button className="text-xl" size={'icon'} asChild>
                     <Link to="/reservas">
