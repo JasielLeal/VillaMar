@@ -13,7 +13,7 @@ export function LucroTotal() {
                 <Card className=" shadow">
                     <CardHeader className="flex gap-2">
                         <CardDescription className="flex items-center justify-between">
-                            Total Recebido (Mês)
+                            <p>Total Recebido (Mês)</p>
                             <div className="text-xl text-primary">
                                 <MdAttachMoney />
                             </div>

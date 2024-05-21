@@ -1,5 +1,5 @@
 import { TotalMonthlyAmount } from "@/api/TotalMonthlyAmount/TotalMonthlyAmount";
-import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -22,12 +22,14 @@ export function Financas() {
         <div className="mt-10 px-5">
             <Card className=" shadow">
                 <CardHeader className="flex gap-2">
-                    <CardDescription className="flex items-center justify-between">
-                        Total arrecadado (Mês)
+
+                    <div className="flex w-full justify-between">
+                        <p>Total arrecadado (Mês)</p>
                         <div className="text-xl text-primary">
                             <IoIosCheckbox />
                         </div>
-                    </CardDescription>
+                    </div>
+
                     <Separator />
                     <div className="flex items-center justify-between">
                         {
@@ -52,7 +54,7 @@ export function Financas() {
                     </div>
                 </CardHeader>
             </Card>
-            
+
         </div>
     )
 

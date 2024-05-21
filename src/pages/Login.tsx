@@ -1,4 +1,4 @@
-import logo from '@/assets/logo.png'
+import logo from '@/assets/logo2.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
@@ -14,6 +14,8 @@ import Cookies from 'universal-cookie'
 
 export function Login() {
 
+    const expiryTime = new Date();
+    expiryTime.setTime(expiryTime.getTime() + (8 * 60 * 60 * 1000));
     const navigate = useNavigate()
     const cookie = new Cookies()
 
@@ -27,7 +29,7 @@ export function Login() {
         mutationFn: LoginUser,
         onSuccess: (response) => {
             toast.success("Sucesso");
-            cookie.set('token', response.data.token)
+            cookie.set('token', response.data.token, { expires: expiryTime})
             navigate('/home', { replace: true })
         },
         onError: () => {

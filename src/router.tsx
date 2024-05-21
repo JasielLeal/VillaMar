@@ -6,21 +6,28 @@ import { Reservas } from "./pages/Reservas";
 import { ReservasDia } from "./pages/ReservasDia";
 import { Users } from "./pages/Users";
 import { Financas } from "./pages/Financas";
+import { PrivateRoutes } from "./privateRoutes";
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: <Login />,
     },
     {
-        path: '/',
-        element: <AppLayout />,
+        path: "/",
+        element: <PrivateRoutes >
+            <AppLayout />
+        </PrivateRoutes>,
         children: [
-            { path: '/home', element: <Home /> },
-            { path: '/reservas', element: <Reservas /> },
-            { path: '/reservas/:day', element: <ReservasDia /> },
-            { path: '/users', element: <Users /> },
-            { path: '/financas', element: <Financas /> }
-        ]
-    }
-])
+            { path: "/home", element: <Home />, },
+            { path: "/reservas", element: <Reservas /> },
+            { path: "/reservas/:day", element: <ReservasDia /> },
+            { path: "/users", element: <Users /> },
+            { path: "/financas", element: <Financas /> },
+        ],
+    },
+]);
+
+
+
+

@@ -53,7 +53,7 @@ export function CriarUsuario() {
     return (
         <>
             <Dialog open={modal}>
-                <DialogTrigger onClick={set}>
+                <DialogTrigger onClick={set} asChild>
                     <Button className="flex items-center gap-2 mt-5 mb-10">Adicionar Usuário <FaRegSquarePlus /></Button>
                 </DialogTrigger>
                 <DialogContent>

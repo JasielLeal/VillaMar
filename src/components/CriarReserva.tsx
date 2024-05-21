@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import {
+    Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { useParams } from "react-router-dom";
@@ -20,6 +22,7 @@ import { ptBR } from 'date-fns/locale';
 export function CriarReserva() {
     const { day } = useParams();
     const [cpf, setCpf] = useState("");
+    const [modal, setModal] = useState(false)
     const queryClient = useQueryClient()
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({
@@ -33,12 +36,21 @@ export function CriarReserva() {
         onSuccess: () => {
             toast.success("Sucesso");
             queryClient.invalidateQueries(['FindByDay'] as InvalidateQueryFilters)
+            setModal(false)
         },
         onError: () => {
             toast.error("Erro durante a autenticação");
         },
 
     })
+
+    function set() {
+        setModal(true)
+    }
+
+    function closeModal() {
+        setModal(false)
+    }
 
     const onSub = async (data: FieldValues) => {
         // Adicionando um dia à data de checkout para corrigir possíveis diferenças de fuso horário
@@ -75,66 +87,85 @@ export function CriarReserva() {
 
     return (
         <>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Criar reserva</DialogTitle>
-                    <form onSubmit={handleSubmit(onSub)}>
-                        <div className="flex items-center">
-                            <p className="text-left">Nome</p>
-                            {errors.name && <span className="text-red-500">{errors.name.message?.toString()}</span>}
-                        </div>
-                        <Input placeholder="Nome do cliente" className="mb-2" {...register('name')} />
+            <Dialog open={modal}>
+                <DialogTrigger asChild onClick={set}>
+                    <Button className="mt-5 mb-5 flex ">Adicionar</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle><p>Criar Reserva</p></DialogTitle>
+                        <form onSubmit={handleSubmit(onSub)}>
+                            <div className="flex items-center">
+                                <p className="text-left">Nome</p>
+                                {errors.name && <span className="text-red-500">{errors.name.message?.toString()}</span>}
+                            </div>
+                            <Input placeholder="Nome do cliente" className="mb-2" {...register('name')} />
 
-                        <div className="flex items-center">
-                            <p className="text-left">CPF</p>
-                            {errors.cpf && <span className="text-red-500">{errors.cpf.message?.toString()}</span>}
-                        </div>
-                        <Input placeholder="CPF do cliente" className="mb-2" value={cpf} {...register('cpf')} onChange={HandleFormatCPF} />
+                            <div className="flex items-center">
+                                <p className="text-left">CPF</p>
+                                {errors.cpf && <span className="text-red-500">{errors.cpf.message?.toString()}</span>}
+                            </div>
+                            <Input placeholder="CPF do cliente" className="mb-2" value={cpf} {...register('cpf')} onChange={HandleFormatCPF} />
 
-                        <p className="text-left">Quarto</p>
-                        <div className="flex border p-2 rounded-sm mb-2">
-                            <select className="text-left w-full" {...register('roomName')}>
-                                <option value="Quarto 1">Quarto 1</option>
-                                <option value="Quarto 2">Quarto 2</option>
-                                <option value="Quarto 3">Quarto 3</option>
-                                <option value="Quarto 4">Quarto 4</option>
-                                <option value="Quarto 5">Quarto 5</option>
-                                <option value="Quarto 6">Quarto 6</option>
-                                <option value="Quarto 7">Quarto 7</option>
-                                <option value="Quarto 8">Quarto 8</option>
-                            </select>
-                        </div>
-                        <p className="text-left">Check-In</p>
-                        <Input placeholder={format(day as string, "dd'/'MM'/'yyyy")} className="mb-2" disabled={true} value={format(day as string, "dd'/'MM'/'yyyy")} />
-                        <p className="text-left">Check-Out</p>
-                        <Input placeholder="Check-out" type="date" className="mb-2" {...register('checkOut')} />
-                        {errors.checkOut && <span className="text-red-500">{errors.checkOut.message?.toString()}</span>}
+                            <p className="text-left">Quarto</p>
+                            <div className="flex border p-2 rounded-sm mb-2">
+                                <select className="text-left w-full" {...register('roomName')}>
+                                    <option value="Quarto 1">Quarto 1</option>
+                                    <option value="Quarto 2">Quarto 2</option>
+                                    <option value="Quarto 3">Quarto 3</option>
+                                    <option value="Quarto 4">Quarto 4</option>
+                                    <option value="Quarto 5">Quarto 5</option>
+                                    <option value="Quarto 6">Quarto 6</option>
+                                    <option value="Quarto 7">Quarto 7</option>
+                                    <option value="Quarto 8">Quarto 8</option>
+                                </select>
+                            </div>
+                            <p className="text-left">Check-In</p>
+                            <Input placeholder={format(day as string, "dd'/'MM'/'yyyy")} className="mb-2" disabled={true} value={format(day as string, "dd'/'MM'/'yyyy")} />
+                            <p className="text-left">Check-Out</p>
+                            <Input placeholder="Check-out" type="date" className="mb-2" {...register('checkOut')} />
+                            {errors.checkOut && <span className="text-red-500">{errors.checkOut.message?.toString()}</span>}
 
-                        <div className="flex items-center">
-                            <p className="text-left">Origem</p>
-                            {errors.FromWhere && <span className="text-red-500">{errors.FromWhere.message?.toString()}</span>}
-                        </div>
-                        <Input placeholder="WhatsApp, Booking, etc..." className="mb-2" {...register('FromWhere')} />
+                            <div className="flex items-center">
+                                <p className="text-left">Origem</p>
+                                {errors.FromWhere && <span className="text-red-500">{errors.FromWhere.message?.toString()}</span>}
+                            </div>
+                            <div className="flex border p-2 rounded-sm mb-2">
+                                <select className="text-left w-full" {...register('FromWhere')}>
+                                    <option value="WhatsApp">WhatsApp</option>
+                                    <option value="Booking">Booking</option>
+                                    <option value="Airbnb">Airbnb</option>
+                                </select>
+                            </div>
 
 
-                        <div className="flex items-center">
-                            <p className="text-left">Valor</p>
-                            {errors.value && <span className="text-red-500">{errors.value.message?.toString()}</span>}
-                        </div>
-                        <Input placeholder="Valor da reserva" className="mb-2" {...register('value')} onChange={handleValueChange} />
+                            <div className="flex items-center">
+                                <p className="text-left">Valor</p>
+                                {errors.value && <span className="text-red-500">{errors.value.message?.toString()}</span>}
+                            </div>
+                            <Input placeholder="Valor da reserva" className="mb-2" {...register('value')} onChange={handleValueChange} />
 
-                        <p className="text-left">Status do pagamento</p>
-                        <div className="flex border p-2 rounded-sm mb-2">
-                            <select className="text-left w-full" {...register('status')}>
-                                <option value="false">Pendente</option>
-                                <option value="true">Pago</option>
-                            </select>
-                            {errors.status && <span className="text-red-500">{errors.status.message?.toString()}</span>}
-                        </div>
-                        <Button className="w-full" disabled={isPending}>Criar reserva</Button>
-                    </form>
-                </DialogHeader>
-            </DialogContent>
+                            <p className="text-left">Status do pagamento</p>
+                            <div className="flex border p-2 rounded-sm mb-2">
+                                <select className="text-left w-full" {...register('status')}>
+                                    <option value="false">Pendente</option>
+                                    <option value="true">Pago</option>
+                                </select>
+                                {errors.status && <span className="text-red-500">{errors.status.message?.toString()}</span>}
+                            </div>
+                            <div className="flex gap-5">
+                                <Button className="w-full" disabled={isPending}>
+                                    Criar reserva
+                                </Button>
+                                <Button onClick={closeModal} variant={'outline'} className="w-full" >
+                                    Cancelar
+                                </Button>
+                            </div>
+                        </form>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
         </>
     )
 }

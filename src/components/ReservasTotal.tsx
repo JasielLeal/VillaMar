@@ -1,21 +1,20 @@
 import {
     Card,
-    CardDescription,
     CardHeader,
-} from "@/components/ui/card"
-import { Separator } from "./ui/separator"
+} from "@/components/ui/card";
+import { Separator } from "./ui/separator";
 import { IoIosCheckbox } from "react-icons/io";
 import { useQuery } from "@tanstack/react-query";
 import { totalMonthlyBooking } from "@/api/totalMonthlyBooking/totalMonthlyBooking";
-import { IoMdEye } from "react-icons/io";
-import { IoMdEyeOff } from "react-icons/io";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useState } from "react";
+
 export function ReservasTotal() {
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
 
     function toggleVisible() {
-        setVisible(!visible)
+        setVisible(!visible);
     }
 
     const { data } = useQuery({
@@ -24,40 +23,30 @@ export function ReservasTotal() {
     });
 
     return (
-        <div className="">
+        <>
+            <Card className="shadow">
+                <CardHeader className="flex flex-col gap-2">
 
-            <Card className=" shadow">
-                <CardHeader className="flex gap-2">
-                    <CardDescription className="flex items-center justify-between">
-                        Reservas Finalizadas (Mês)
+                    <div className="flex w-full justify-between">
+                        <div>Reservas Finalizadas (Mês)</div>
                         <div className="text-xl text-primary">
                             <IoIosCheckbox />
                         </div>
-                    </CardDescription>
+                    </div>
+
                     <Separator />
                     <div className="flex items-center justify-between">
-                        {
-                            visible ?
-                            <p className="text-xl">{data}</p>
-                            :
-                            <div className="bg-slate-100 w-56 h-7 rounded-md"></div>
-                        }
-                        {visible ?
-                            <button onClick={toggleVisible}>
-                                <p className="text-xl">
-                                    <IoMdEye />
-                                </p>
-                            </button>
-                            :
-                            <button onClick={toggleVisible}>
-                                <p className="text-xl">
-                                    <IoMdEyeOff />
-                                </p>
-                            </button>
-                        }
+                        {visible ? (
+                            <div className="text-xl">{data}</div>
+                        ) : (
+                            <div className="bg-slate-100 w-56 h-7 rounded-md" />
+                        )}
+                        <button onClick={toggleVisible} className="text-xl">
+                            {visible ? <IoMdEye /> : <IoMdEyeOff />}
+                        </button>
                     </div>
                 </CardHeader>
             </Card>
-        </div>
-    )
+        </>
+    );
 }

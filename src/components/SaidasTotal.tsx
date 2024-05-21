@@ -13,7 +13,7 @@ export function SaidasTotal() {
                 <Card className=" shadow">
                     <CardHeader className="flex gap-2">
                         <CardDescription className="flex items-center justify-between">
-                            Saidas (Mês)
+                            <p>Saidas (Mês)</p>
                             <div className="text-xl text-primary">
                                 <MdOutlineMoneyOff />
                             </div>

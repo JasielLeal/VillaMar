@@ -27,9 +27,8 @@ export function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger className='flex items-center font-semibold text-slate-800'>{data?.name} {data?.secondName}<MdKeyboardArrowDown /></DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                            <DropdownMenuLabel><p>Minha Conta</p></DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Configurações</DropdownMenuItem>
                             <DropdownMenuItem className='text-red-500'>Sair</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
