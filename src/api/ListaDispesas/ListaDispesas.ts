@@ -1,20 +1,20 @@
 import Cookies from "universal-cookie";
 import { backend } from "../api";
 
-export interface TotalAmountRequest {
+export interface ListaDispesasRequest {
   day: number;
 }
 
-export async function TotalMonthlyAmount({ day }: TotalAmountRequest) {
+export async function ListaDispesas({ day }: ListaDispesasRequest) {
   const cookie = new Cookies();
 
-  const response = await backend.get(`reserve/monthlyamount`, {
+  const response = await backend.get(`/expense/month`, {
     headers: {
       Authorization: `Bearer ${cookie.get("token")}`,
     },
     params: {
-      month: day,
-    },
+        month: day
+    }
   });
 
   return response.data;

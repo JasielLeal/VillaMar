@@ -13,7 +13,7 @@ import { Button } from "./ui/button";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CriarReservaSchema } from "@/schemas/CriarReservaSchema";
-import { formatCPF, formatCurrencye } from "@/utils/FormatCPF";
+import { formatCPF, formatCurrencye } from "@/utils/Utils";
 import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
 import { criarReserva } from "@/api/CriarReserva/CriarReserva";
 import toast from "react-hot-toast";

@@ -6,7 +6,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
 import { format } from "date-fns";
-import { formatCPF } from "@/utils/FormatCPF";
+import { formatCPF } from "@/utils/Utils";
 import { InvalidateQueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UpdateStatus } from "@/api/UpdateStatus/UpdateStatus";
 import toast from "react-hot-toast";
