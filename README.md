@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# VillaMar BackEnd 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Projeto idealizado em React, TypeScript e TaiWind CSS.
 
-Currently, two official plugins are available:
+Este projeto foi idealizado para uma pousada local com o intuito de melhorar a performance no agendamento de reservas e na gestão dos gastos estabelecidos pela pousada. Através de uma interface intuitiva e funcionalidades robustas, o sistema visa otimizar processos administrativos, proporcionando uma experiência mais eficiente tanto para os gestores quanto para os clientes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Funcionalidades Principais :
 
-## Expanding the ESLint configuration
+### Sistema de login
+Autenticação Segura: Permite que usuários autorizados acessem o sistema com segurança
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Sistema de Gestão de usuário
+Criação e exclusão de Usuários: Adicione novos usuários ou excluar usuário existentes.
+Controle de Acesso: Diferentes níveis de permissão para administradores e funcionários.
+Monitoramento de Atividades: Rastreie ações dos usuários no sistema para maior segurança e controle.
 
-- Configure the top-level `parserOptions` property like this:
+### Sistema de Gestão de Reservas
+Agendamento de Reservas: Interface fácil de usar para criar e gerenciar reservas.
+Calendário de Disponibilidade: Visualize rapidamente a disponibilidade dos quartos.
+Confirmação e Cancelamento de Reservas: Gerencie confirmações e cancelamentos de forma eficiente.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Sistema de Gestão de Despesas
+Registro de Despesas: Mantenha um registro detalhado de todas as despesas da pousada
+Relatórios Financeiros: Gere relatórios detalhados para analisar os gastos ao longo do tempo.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
