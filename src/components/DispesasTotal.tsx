@@ -6,7 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { MdMoneyOff } from "react-icons/md";
-export function DispesasTotal({data}) {
+
+interface TypeData {
+    data: number
+}
+
+export function DispesasTotal({ data }: TypeData) {
+
+    console.log(data)
 
     const [visible, setVisible] = useState(false)
 
@@ -16,7 +23,7 @@ export function DispesasTotal({data}) {
 
     const { data: monthDay } = useQuery({
         queryKey: ["TotalDispesas", data],
-        queryFn: () => TotalDispesas({ day: data})
+        queryFn: () => TotalDispesas({ day: data })
     });
 
     return (

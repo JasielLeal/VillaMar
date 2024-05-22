@@ -3,6 +3,7 @@ import { CriarUsuario } from "@/components/CriarUsuario";
 import { ListagemDeUsuarios, User } from "@/components/ListagemDeUsuarios";
 
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 
 
 
@@ -24,9 +25,17 @@ export function Users() {
                 <CriarUsuario />
             </div>
 
-            {data?.map((user: User) => (
-                <ListagemDeUsuarios user={user} key={user.id} />
-            ))}
+            {data ?
+                data?.map((user: User) => (
+                    <ListagemDeUsuarios user={user} key={user.id} />
+                ))
+                :
+                <div className="flex h-[240px] items-center justify-center col-span-3">
+                    <Loader2 className="h-12 w-12 animate-spin text-muted-foreground flex justify-center" />
+                </div>
+            }
+
+            { }
         </div>
     )
 }

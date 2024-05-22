@@ -10,6 +10,7 @@ import {
     AlertTitle,
 } from "@/components/ui/alert"
 import { CriarReserva } from "./CriarReserva";
+import { Loader2 } from "lucide-react";
 
 
 
@@ -24,6 +25,7 @@ export function ListagemDasReservas() {
 
     return (
         <>
+           
             {data?.length === 0 ? (
                 <div>
                     <div className="flex justify-end w-full">
@@ -49,6 +51,13 @@ export function ListagemDasReservas() {
                     ))}
                 </>
             )}
+             {data ?
+                ''
+                :
+                <div className="flex items-center justify-center col-span-3">
+                    <Loader2 className="h-12 w-12 animate-spin text-muted-foreground flex justify-center" />
+                </div>
+            }
         </>
     );
 }

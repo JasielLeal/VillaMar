@@ -76,8 +76,8 @@ export function CriarDespesa() {
 
 
                         <div className="flex gap-2 mt-5">
-                            <Button className="w-full">Criar dispesa</Button>
-                            <Button className="w-full" onClick={closeModal} variant={'outline'} disabled={isPending}>Fechar</Button>
+                            <Button className="w-full" disabled={isPending}>Criar dispesa</Button>
+                            <Button className="w-full" onClick={closeModal} variant={'outline'} >Fechar</Button>
                         </div>
                     </form>
                 </DialogContent>

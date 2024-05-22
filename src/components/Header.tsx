@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useQuery } from '@tanstack/react-query';
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { Skeleton } from './ui/skeleton';
 
 export function Header() {
 
@@ -25,7 +26,10 @@ export function Header() {
                 <img src={logo} alt="logo do site" className='w-36' />
                 <div className='flex'>
                     <DropdownMenu>
-                        <DropdownMenuTrigger className='flex items-center font-semibold text-slate-800'>{data?.name} {data?.secondName}<MdKeyboardArrowDown /></DropdownMenuTrigger>
+                        <DropdownMenuTrigger className='flex items-center font-semibold text-slate-800'>
+                            {data ? data?.name +' '+ data?.secondName : <Skeleton className="w-[100px] h-[20px] rounded-full" />
+}
+                            <MdKeyboardArrowDown /></DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuLabel><p>Minha Conta</p></DropdownMenuLabel>
                             <DropdownMenuSeparator />
